@@ -9,5 +9,5 @@ import retrofit2.http.GET;
 
 public interface Services {
     @GET("BisikletDuraklariJSON")
-    Call<List<BikeStation>> getBicycleStation();
+    Call<List<BikeStation>> getBikeStation();
 }

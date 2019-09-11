@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
     private void getData() {
 
         services = ApiClient.createService(Services.class);
-        Call<List<BikeStation>> call = services.getBicycleStation();
+        Call<List<BikeStation>> call = services.getBikeStation();
 
         call.enqueue(new Callback<List<BikeStation>>() {
             @Override
