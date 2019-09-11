@@ -5,4 +5,4 @@ Projenın detaylı bilgisine https://medium.com/@ugurayaz/android-recyclerview-s
 Proje de kullanılan json verisinin url adresi: https://kayseriulasim.com/BisikletDuraklariJSON
 
 # Screenshots
-<img src="_screenshots/preview.jpg" width="250"/>
+<img src="_screenshots/preview.jpg" width="200"/>
