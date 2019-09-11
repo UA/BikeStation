@@ -1,3 +1,3 @@
 # BikeStation
 
-Enpoint:https://kayseriulasim.com/BisikletDuraklariJSON
+Endpoint:https://kayseriulasim.com/BisikletDuraklariJSON
