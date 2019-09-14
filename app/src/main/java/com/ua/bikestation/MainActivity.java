@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
             public void onResponse(Call<List<BikeStation>> call, Response<List<BikeStation>> response) {
                 if(swipeRefreshLayout.isRefreshing())
                     swipeRefreshLayout.setRefreshing(false);
-                assert response.body() != null;
-                for (BikeStation station:response.body()) {
-                    list.add(station);
+
+                if (response.body() != null){
+                    list.addAll(response.body());
                     adapter.notifyDataSetChanged();
                 }
             }
