@@ -1,9 +1,11 @@
 package com.ua.bikestation.model;
 
+import androidx.databinding.BaseObservable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BikeStation {
+public class BikeStation extends BaseObservable {
     @SerializedName("Lat")
     @Expose
     private String lat;
@@ -59,5 +61,7 @@ public class BikeStation {
     public void setEmptySlot(Integer emptySlot) {
         this.emptySlot = emptySlot;
     }
+
+
 
 }

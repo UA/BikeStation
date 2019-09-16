@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="station"
+            type="com.ua.bikestation.model.BikeStation" />
+    </data>
+
+<androidx.cardview.widget.CardView
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -29,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="4dp"
-                android:text="stationName"
+                android:text="@{station.stationName}"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -44,7 +52,7 @@
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="3dp"
                     android:layout_weight="1"
-                    android:text="fullSlot"
+                    android:text='@{"Full Slot: " + station.fullSlot}'
                     android:textSize="12sp"
                     android:textStyle="italic"
                     android:layout_marginStart="3dp" />
@@ -55,19 +63,14 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="3dp"
-                    android:text="emptySlot"
+                    android:text='@{"Empty Slot: " + station.emptySlot}'
                     android:textSize="12sp"
                     android:textStyle="italic"
                     android:layout_marginRight="16dp"
                     android:layout_marginLeft="8dp" />
             </LinearLayout>
-
-
-
         </LinearLayout>
 
     </LinearLayout>
-
-
-
 </androidx.cardview.widget.CardView>
+</layout>

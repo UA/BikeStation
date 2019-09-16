@@ -2,8 +2,8 @@ package com.ua.bikestation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.ua.bikestation.api.Services;
 import com.ua.bikestation.adapter.BikeStationAdapter;
+import com.ua.bikestation.databinding.ActivityMainBinding;
 import com.ua.bikestation.listener.ItemClickListener;
 import com.ua.bikestation.model.BikeStation;
 import com.ua.bikestation.utils.ApiClient;
@@ -28,24 +29,24 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements ItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     Services services;
-    RecyclerView recyclerView;
     BikeStationAdapter adapter;
     List<BikeStation> list = new ArrayList<>();
-    SwipeRefreshLayout swipeRefreshLayout;
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView =  findViewById(R.id.recyclerView);
-        swipeRefreshLayout= findViewById(R.id.swipeRefresh);
-        swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        binding.swipeRefresh.setOnRefreshListener(this);
 
         adapter = new BikeStationAdapter(this, list);
-        recyclerView.setAdapter(adapter);
+        binding.recyclerView.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        binding.recyclerView.setLayoutManager(linearLayoutManager);
         adapter.setItemClickListener(this);
 
         getData();
@@ -59,8 +60,8 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         call.enqueue(new Callback<List<BikeStation>>() {
             @Override
             public void onResponse(Call<List<BikeStation>> call, Response<List<BikeStation>> response) {
-                if(swipeRefreshLayout.isRefreshing())
-                    swipeRefreshLayout.setRefreshing(false);
+                if(binding.swipeRefresh.isRefreshing())
+                    binding.swipeRefresh.setRefreshing(false);
                 assert response.body() != null;
                 for (BikeStation station:response.body()) {
                     list.add(station);
@@ -70,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
 
             @Override
             public void onFailure(Call<List<BikeStation>> call, Throwable t) {
-                if(swipeRefreshLayout.isRefreshing())
-                    swipeRefreshLayout.setRefreshing(false);
+                if(binding.swipeRefresh.isRefreshing())
+                    binding.swipeRefresh.setRefreshing(false);
             }
         });
     }
@@ -86,18 +87,20 @@ public class MainActivity extends AppCompatActivity implements ItemClickListener
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
         }
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        if (searchView != null) {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.getFilter().filter(newText);
+                    return true;
+                }
+            });
+        }
 
         return super.onCreateOptionsMenu(menu);
     }

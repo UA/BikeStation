@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ua.bikestation.BR;
 import com.ua.bikestation.R;
 import com.ua.bikestation.listener.ItemClickListener;
 import com.ua.bikestation.model.BikeStation;
@@ -93,20 +95,18 @@ public class BikeStationAdapter extends RecyclerView.Adapter<BikeStationAdapter.
     }
 
     public class StationViewHolder extends RecyclerView.ViewHolder {
-        TextView stationName, fullSlot,emptySlot;
+
+        public ViewDataBinding binding;
 
         public StationViewHolder(@NonNull View itemView) {
             super(itemView);
-            stationName = itemView.findViewById(R.id.stationName);
-            fullSlot = itemView.findViewById(R.id.fullSlot);
-            emptySlot = itemView.findViewById(R.id.emptySlot);
+           binding = DataBindingUtil.bind(itemView);
         }
 
         @SuppressLint("SetTextI18n")
         public void setData(final BikeStation station, final int position) {
-            this.stationName.setText(station.getStationName());
-            this.fullSlot.setText("Full Slot: " + station.getFullSlot());
-            this.emptySlot.setText("Empty Slot: " + station.getEmptySlot());
+            binding.setVariable(BR.station,station);
+            binding.executePendingBindings();
             itemView.setOnClickListener(v -> mItemClickListener.onItemClick(station,position));
         }
     }

@@ -21,6 +21,9 @@ android {
             buildConfigField("String", "BASE_URL", "\"https://kayseriulasim.com/\"")
         }
     }
+
+    dataBinding.enabled = true
+
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
